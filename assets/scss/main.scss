@@ -1,0 +1,29 @@
+body,
+html,
+h1,
+p {
+  margin: 0;
+}
+
+html:any-link {
+  text-decoration: none;
+  color: black;
+}
+.v-navigation-drawer {
+  width: 100vw !important;
+  background: white !important;
+}
+html {
+  scrollbar-gutter: stable;
+}
+
+* {
+  font-family: "Commissioner", sans-serif;
+}
+
+@media screen and (max-width: 1900px) {
+}
+@media screen and (max-width: 1420px) {
+}
+@media screen and (max-width: 1024px) {
+}
