@@ -1,26 +1,20 @@
-{
-  "users": [
-    {
-      "id": 1,
-      "username": "admin",
-      "password": "admin",
-      "firstName": "John",
-      "lastName": "Doe",
-      "birthdate": "1990-01-01",
-      "city": "City1"
-    }
-    // Дополнительные пользователи могут быть добавлены по аналогии
-  ]
-  "users": [
-    {
-      "id": 2,
-      "username": "guest",
-      "password": "guest",
-      "firstName": "Sam",
-      "lastName": "Alt",
-      "birthdate": "1995-02-01",
-      "city": "Санкт-Петербург"
-    }
-    // Дополнительные пользователи могут быть добавлены по аналогии
-  ]
-}
+[
+  {
+    "id": 1,
+    "username": "admin",
+    "password": "admin",
+    "firstName": "Иван",
+    "lastName": "Иванов",
+    "birthdate": "1990-05-15",
+    "city": "Москва"
+  },
+  {
+    "id": 2,
+    "username": "admin",
+    "password": "admin",
+    "firstName": "Иван",
+    "lastName": "Иванов",
+    "birthdate": "1990-05-15",
+    "city": "Москва"
+  }
+]

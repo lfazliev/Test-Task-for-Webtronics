@@ -1,19 +1,29 @@
-{
-  "tickets": [
-    {
-      "id": 1,
-      "authorId": 1,
-      "title": "Ticket Title 1",
-      "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      "createdAt": "2024-01-02T12:00:00"
-    },
-    {
-      "id": 2,
-      "authorId": 1,
-      "title": "Ticket Title 2",
-      "message": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      "createdAt": "2024-01-03T15:30:00"
-    }
-    // Дополнительные тикеты могут быть добавлены по аналогии
-  ]
-}
+[
+  {
+    "id": 1,
+    "authorId": 1,
+    "title": "Проблема с доступом",
+    "message": "Не могу войти в систему. Возможно, проблемы с учетной записью.",
+    "createdAt": "2024-01-05T10:30:00",
+    "details": "Подробная информация о проблеме.",
+    "status": "Открыт"
+  },
+  {
+    "id": 2,
+    "authorId": 1,
+    "title": "Проблема с доступом",
+    "message": "Не могу войти в систему. Возможно, проблемы с учетной записью.",
+    "createdAt": "2024-01-05T10:30:00",
+    "details": "Подробная информация о проблеме.",
+    "status": "Открыт"
+  },
+  {
+    "id": 3,
+    "authorId": 2,
+    "title": "Проблема с доступом",
+    "message": "Не могу войти в систему. Возможно, проблемы с учетной записью.",
+    "createdAt": "2024-01-05T10:30:00",
+    "details": "Подробная информация о проблеме.",
+    "status": "Открыт"
+  }
+]

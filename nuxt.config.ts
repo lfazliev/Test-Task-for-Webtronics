@@ -22,24 +22,8 @@ export default defineNuxtConfig({
     shim: false
   },
 
-  vite: {
-    vue: {
-      template: {
-        transformAssetUrls,
-      },
-    },
-  },
-  build: {
-    transpile: ['vuetify'],
-  },
+
   modules: [
-    async (options, nuxt) => {
-      nuxt.hooks.hook('vite:extendConfig', (config: any) => {
-        config.plugins.push(
-          vuetify({ autoImport: true })
-        )
-      })
-    },
     '@nuxtjs/google-fonts',
     '@nuxtseo/module',
     'nuxt-simple-sitemap',
