@@ -2,28 +2,51 @@
   {
     "id": 1,
     "authorId": 1,
-    "title": "Проблема с доступом",
-    "message": "Не могу войти в систему. Возможно, проблемы с учетной записью.",
+    "authorName": "admin",
+    "title": "Login Issue",
+    "message": "Unable to access the system. Suspecting account-related problems.",
     "createdAt": "2024-01-05T10:30:00",
-    "details": "Подробная информация о проблеме.",
-    "status": "Открыт"
+    "details": "Provided comprehensive information on the issue.",
+    "status": "Open"
   },
   {
     "id": 2,
     "authorId": 1,
-    "title": "Проблема с доступом",
-    "message": "Не могу войти в систему. Возможно, проблемы с учетной записью.",
-    "createdAt": "2024-01-05T10:30:00",
-    "details": "Подробная информация о проблеме.",
-    "status": "Открыт"
+    "authorName": "admin",
+    "title": "Access Trouble",
+    "message": "Facing login issues. Might be due to account problems. Facing login issues. Might be due to account problems. Facing login issues. Might be due to account problems.",
+    "createdAt": "2024-01-05T10:31:00",
+    "details": "Delineated details about the problem encountered.",
+    "status": "Closed"
   },
   {
     "id": 3,
     "authorId": 2,
-    "title": "Проблема с доступом",
-    "message": "Не могу войти в систему. Возможно, проблемы с учетной записью.",
-    "createdAt": "2024-01-05T10:30:00",
-    "details": "Подробная информация о проблеме.",
-    "status": "Открыт"
+    "authorName": "guest",
+    "title": "Authentication Error",
+    "message": "Encountering difficulty logging in. Possible account-related issues.",
+    "createdAt": "2024-01-06T10:30:00",
+    "details": "Elaborated details about the login problem faced.",
+    "status": "Open"
+  },
+  {
+    "id": 4,
+    "authorId": 1,
+    "authorName": "admin",
+    "title": "System Lag",
+    "message": "Experiencing sluggish system performance. Need immediate assistance.",
+    "createdAt": "2024-01-07T09:45:00",
+    "details": "Provided additional information regarding the performance degradation issue.",
+    "status": "Open"
+  },
+  {
+    "id": 5,
+    "authorId": 2,
+    "authorName": "guest",
+    "title": "UI Bug Report",
+    "message": "Noticed a glitch while navigating the user interface. Reporting for resolution.",
+    "createdAt": "2024-01-07T11:15:00",
+    "details": "Outlined specifics about the encountered UI bug.",
+    "status": "Open"
   }
 ]

@@ -10,12 +10,17 @@ button {
   align-items: center;
   border: none;
   text-align: left;
+  cursor: pointer;
+  font-size: 1.2rem;
+  border-bottom: 1px solid black;
+  padding: 0 0 5px;
+  text-transform: uppercase;
 }
 input {
   outline: none !important;
   border: none;
 }
-html:any-link {
+a:any-link {
   text-decoration: none;
   color: black;
 }
@@ -24,7 +29,72 @@ html {
   scrollbar-gutter: stable;
   font-size: 16px;
 }
+html,
+body {
+  min-height: 100vh;
+}
+.text-field {
+  width: 100%;
+  position: relative;
+  margin-top: 30px;
 
+  input {
+    color: black;
+    border-bottom: black 1px solid;
+    padding-bottom: 8px;
+    margin-top: 0px;
+  }
+
+  > div {
+    position: absolute;
+    right: 0;
+    bottom: 4px;
+    padding: 7px;
+    border: 1px solid black;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+
+  .unshow {
+    background-color: black;
+  }
+
+  input {
+    width: 100%;
+  }
+
+  span {
+    color: rgb(162, 75, 75);
+  }
+
+  label {
+    color: #7d7d7d;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    pointer-events: none;
+    transform-origin: 0 0;
+    transition:
+      color 0.15s ease-in-out,
+      transform 0.15s ease-in-out;
+  }
+
+  .text-input::-moz-placeholder {
+    color: transparent;
+  }
+
+  .text-input::placeholder {
+    color: transparent;
+  }
+
+  .text-input:focus ~ label,
+  .text-input:not(:placeholder-shown) ~ label,
+  .selectCity ~ label {
+    color: black;
+    transform: scale(0.85) translateY(-1.75rem) translateX(0.15rem);
+  }
+}
 * {
   font-family: "Commissioner", sans-serif;
 }

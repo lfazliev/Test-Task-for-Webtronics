@@ -3,11 +3,31 @@
     <div v-if="!auth">
       <p>Login</p>
     </div>
+    <div v-else>
+      <p>{{ namePage }}</p>
+      <div>
+        <nuxt-link to="/">Main Page</nuxt-link>
+        <nuxt-link to="/profile">Profile</nuxt-link>
+      </div>
+    </div>
   </header>
 </template>
 <script setup lang="ts">
 const userStore = useUserStore()
 const { auth } = storeToRefs(userStore)
+const route = useRoute()
+const namePage = computed(() => {
+  switch (route.path) {
+    case '/':
+      return 'Main page';
+      break;
+    case '/profile':
+      return 'Profile';
+      break;
+    default:
+      break;
+  }
+})
 </script>
 <style lang="scss" scoped>
 header {
@@ -15,6 +35,18 @@ header {
   background: rgba(128, 128, 128, 0.394);
   padding: 20px;
   border-radius: 5px;
+
+  >div {
+    display: flex;
+    justify-content: space-between;
+
+    >div {
+      display: flex;
+      gap: 2vw;
+      text-transform: uppercase;
+      align-items: center;
+    }
+  }
 
   p {
     font-size: 2rem;

@@ -6,9 +6,12 @@ export default defineEventHandler(async (event) => {
     const data = await readBody(event)
     const src = path.join(process.cwd(), 'public', 'usersDB.json')
     const content = JSON.parse(fs.readFileSync(src, 'utf8'));
+
+
     const user = content.find((user: User) => user.username == data.username)
     if (!user) {
-      return (false)
+      setResponseStatus(event, 401); return
+
     }
     else {
       if (user.password == data.password) {
@@ -18,10 +21,12 @@ export default defineEventHandler(async (event) => {
           'Authorization': token
         }
         )
+        delete user.password
         return (user)
       }
       else {
-        return (false)
+        setResponseStatus(event, 401);
+        return
       }
     }
 

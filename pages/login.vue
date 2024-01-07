@@ -1,10 +1,11 @@
 <template>
   <section>
-    <form class="inputContainer" :onsubmit="(e: any) => { e.preventDefault(); login() }">
+    <form class="inputContainer" :onsubmit="(e: SubmitEvent) => { e.preventDefault(); login() }">
 
 
       <div class="text-field">
-        <input class="text-input" type="text" id="name" name="name" placeholder="Ivan" autocomplete="off">
+        <input class="text-input" type="text" id="name" name="name" placeholder="Ivan" autocomplete="off"
+          v-model="username">
         <label for="name">Username</label>
         <!-- <span class="str" v-show="errorsInput.name">{{ errorsInput.name }}</span> -->
       </div>
@@ -24,12 +25,27 @@
 
 <script setup lang="ts">
 const userStore = useUserStore()
-// const { authFetch, registration, restorePass } = userStore
 const { auth } = storeToRefs(userStore)
+const username = ref('')
 const password = ref('')
 const show = ref(false)
-const login = () => {
-  console.log(1);
+const login = async () => {
+  const data = { 'username': username.value.toLocaleLowerCase(), "password": password.value }
+  await $fetch(`/api/login`, {
+    method: "POST",
+    body: data,
+    onResponse({ response }) {
+      if (response.status == 200) {
+        if (process.client) {
+          localStorage.setItem('token', response.headers.get('Authorization') as string)
+        }
+        auth.value = true;
+      } else {
+        console.log('ошибка');    //ВЫВЕСТИ
+
+      }
+    },
+  })
 }
 
 
@@ -44,7 +60,7 @@ watch(() => auth.value, async () => {
       await navigateTo(route.query.to as string)
       return
     }
-    await navigateTo('/profile')
+    await navigateTo('/')
   }
 })
 
@@ -60,74 +76,11 @@ watch(() => auth.value, async () => {
   margin: 20% auto;
 
   button {
-    cursor: pointer;
-    font-size: 1.2rem;
-    border-bottom: 1px solid black;
-    padding: 0 0 5px;
+
     margin: 20px;
-    text-transform: uppercase;
+
   }
 
-  .text-field {
-    width: 100%;
-    position: relative;
-    margin-top: 30px;
 
-    input {
-
-      color: black;
-      border-bottom: black 1px solid;
-      padding-bottom: 8px;
-      margin-top: 0px;
-    }
-
-    >div {
-      position: absolute;
-      right: 0;
-      bottom: 4px;
-      padding: 7px;
-      border: 1px solid black;
-      border-radius: 3px;
-      cursor: pointer;
-    }
-
-    .unshow {
-      background-color: black;
-    }
-
-    input {
-      width: 100%;
-    }
-
-    span {
-      color: rgb(162, 75, 75);
-    }
-
-    label {
-      color: #7D7D7D;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      height: 100%;
-      pointer-events: none;
-      transform-origin: 0 0;
-      transition: color .15s ease-in-out, transform .15s ease-in-out;
-
-    }
-
-    .text-input::-moz-placeholder {
-      color: transparent;
-    }
-
-    .text-input::placeholder {
-      color: transparent;
-    }
-
-    .text-input:focus~label,
-    .text-input:not(:placeholder-shown)~label {
-      color: black;
-      transform: scale(.85) translateY(-1.75rem) translateX(.15rem);
-    }
-  }
 }
 </style>

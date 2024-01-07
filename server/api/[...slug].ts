@@ -10,36 +10,30 @@ import jwt from 'jsonwebtoken';
 // }))
 
 router.get('/user', defineEventHandler(async (event) => {
-  const token = event.node.req.headers.authorization
-  if (!token) return 0
-  jwt.verify(token, '123key', (err: any, decoded: any) => {
-    if (err) {
-      return 0
-    } else {
-      const userId = getQuery(event)?.id as number
-      if (!userId) return 0
-      const src = path.join(process.cwd(), 'public', 'usersDB.json')
-      const content = JSON.parse(fs.readFileSync(src, 'utf8'));
-      const user = content.find((user: User) => user.id == userId);
+  if (event.context.user === false) {
+    setResponseStatus(event, 401)
+    return
+  }
+  const id = getQuery(event)?.id as number
+  if (!id) { setResponseStatus(event, 404); return }
+  const src = path.join(process.cwd(), 'public', 'usersDB.json')
+  const content = JSON.parse(fs.readFileSync(src, 'utf8'));
+  const user = content.find((user: User) => user.id == id);
 
-      if (user) { delete user.password; return user }
-      else return 0
-    }
-  });
+  if (user) { delete user.password; return user }
+  else {
+    setResponseStatus(event, 404); return
+  }
+
 
 }))
 
 router.put('/user', defineEventHandler(async (event) => {
-  const token = event.node.req.headers.authorization
-  let userId: number
-  if (!token) return 0
-  jwt.verify(token, '123key', (err: any, decoded: any) => {
-    if (err) {
-      return 0
-    } else {
-      return userId = decoded.userId
-    }
-  })
+  if (event.context.user === false) {
+    setResponseStatus(event, 401)
+    return
+  }
+  const userId = event.context.user
   const newData = await readBody(event)
   const src = path.join(process.cwd(), 'public', 'usersDB.json')
   const content = JSON.parse(fs.readFileSync(src, 'utf8'));
@@ -53,38 +47,34 @@ router.put('/user', defineEventHandler(async (event) => {
 }))
 
 router.get('/tickets', defineEventHandler(async (event) => {
-  const token = event.node.req.headers.authorization
-  if (!token) return 0
-  jwt.verify(token, '123key', (err: any, decoded: any) => {
-    if (err) {
-      return 0
-    } else {
-      const src = path.join(process.cwd(), 'public', 'ticketsDB.json')
-      const content = JSON.parse(fs.readFileSync(src, 'utf8'));
-      return content
-    }
-  })
+  if (event.context.user === false) {
+    setResponseStatus(event, 401)
+    return
+  }
+  const src = path.join(process.cwd(), 'public', 'ticketsDB.json')
+  const content = JSON.parse(fs.readFileSync(src, 'utf8'));
+  return content
+}
 
 
-}))
+
+))
 
 router.get('/ticket', defineEventHandler(async (event) => {
-  const token = event.node.req.headers.authorization
-  if (!token) return 0
-  jwt.verify(token, '123key', (err: any, decoded: any) => {
-    if (err) {
-      return 0
-    } else {
-      const ticketId = getQuery(event)?.id as number
-      if (!ticketId) return 0
-      const src = path.join(process.cwd(), 'public', 'ticketsDB.json')
-      const content = JSON.parse(fs.readFileSync(src, 'utf8'));
-      const ticket = content.find((ticket: Ticket) => ticket.id == ticketId)
-      if (ticket) return ticket
-      else return 0
+  if (event.context.user === false) {
+    setResponseStatus(event, 401)
+    return
+  }
+  const ticketId = getQuery(event)?.id as number
+  if (!ticketId) return 0
+  const src = path.join(process.cwd(), 'public', 'ticketsDB.json')
+  const content = JSON.parse(fs.readFileSync(src, 'utf8'));
+  const ticket = content.find((ticket: Ticket) => ticket.id == ticketId)
+  if (ticket) return ticket
+  else {
+    setResponseStatus(event, 404); return
+  }
 
-    }
-  })
 
 
 }))

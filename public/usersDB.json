@@ -3,18 +3,18 @@
     "id": 1,
     "username": "admin",
     "password": "admin",
-    "firstName": "Иван",
-    "lastName": "Иванов",
+    "firstName": "Ivan",
+    "lastName": "Ivanov",
     "birthdate": "1990-05-15",
-    "city": "Москва"
+    "city": "Moscow"
   },
   {
     "id": 2,
-    "username": "admin",
-    "password": "admin",
-    "firstName": "Иван",
-    "lastName": "Иванов",
-    "birthdate": "1990-05-15",
-    "city": "Москва"
+    "username": "guest",
+    "password": "guest",
+    "firstName": "Ivan",
+    "lastName": "Ivanov",
+    "birthdate": "2000-05-15",
+    "city": "Sochi"
   }
 ]
