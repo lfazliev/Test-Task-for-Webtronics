@@ -4,8 +4,8 @@
       <label>Filter by status:</label>
       <select v-model="filterStatus">
         <option value="">All</option>
-        <option value="Открыт">Open</option>
-        <option value="Закрыт">Closed</option>
+        <option value="Open">Open</option>
+        <option value="Closed">Closed</option>
       </select>
     </div>
     <table>
@@ -32,7 +32,7 @@
           </td>
           <td>{{ ticket.status }}</td>
           <td>{{ ticket.title }}</td>
-          <td>{{ ticket.message }}</td>
+          <td class="truncatedMessage">{{ ticket.message }}</td>
           <td>{{ formatDate(ticket.createdAt) }}</td>
           <td>
 
@@ -100,6 +100,7 @@ definePageMeta({
 <style lang="scss" scoped>
 .tableContainer {
   margin: 10px;
+  overflow: auto;
 
   table {
     border-spacing: 0;
@@ -111,7 +112,13 @@ definePageMeta({
       padding: 10px;
       text-align: center;
       border-right: 1px solid black;
-      max-width: 60px;
+      max-width: 100px;
+      // min-width: 60px;
+      word-wrap: break-word;
+      hyphens: auto;
+    }
+
+    .truncatedMessage {
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;

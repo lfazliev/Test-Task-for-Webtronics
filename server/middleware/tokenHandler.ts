@@ -21,10 +21,9 @@ export default defineEventHandler((event) => {
     }
   }
   catch (e) {
-    console.log(e)
+    console.error(e)
   }
 })
 interface DecodedToken {
   userId: string;
-  // Добавьте другие поля вашего объекта, если они присутствуют
 }

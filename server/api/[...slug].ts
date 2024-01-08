@@ -41,8 +41,12 @@ router.put('/user', defineEventHandler(async (event) => {
   if (userIndex >= 0) {
     Object.assign(content[userIndex], newData)
   }
+  else {
+    setResponseStatus(event, 500)
+  }
   await fs.writeFile(src, JSON.stringify(content), 'utf8', (err) => {
-    if (err) throw err;
+    if (err) { setResponseStatus(event, 500); throw err; }
+
   });
 }))
 

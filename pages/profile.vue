@@ -1,6 +1,5 @@
 <template>
-  <!-- закрыть!!!!! -->
-  <form :onsubmit="(e: SubmitEvent) => { e.preventDefault(); }">
+  <form :onsubmit="(e: SubmitEvent) => { e.preventDefault(); save() }">
     <div class="userData" v-if="userBuf">
       <div class="text-field">
         <input class="text-input" :disabled="!editable" required type="text" id="username" name="username"
@@ -36,7 +35,8 @@
         <label for="City">City</label>
       </div>
     </div>
-    <button type="submit" v-if="editable">Save</button>
+    <button type="submit" v-if="editable" :style="{ color: !enabled ? '#cfcfcf' : 'black' }">{{ saved ? 'Saved' : 'Save'
+    }}</button>
     <button @click="unlog()" v-if="editable">Exit</button>
   </form>
 </template>
@@ -47,11 +47,45 @@ const { userData } = userStore
 const route = useRoute()
 const userBuf = ref({} as User)
 const editable = ref(false)
+const saved = ref(false)
+const save = async () => {
+  if (!enabled.value) return
+  let token
+  if (process.client) {
+    token = localStorage.getItem('token')
+  }
+  if (!token) { auth.value = false; navigateTo('/login'); return }
+  const data = await $fetch(`/api/user?id=${userData.id}`, {
+    method: "PUT",
+    headers: {
+      "Authorization": token,
+    },
+    body: { ...userBuf.value },
+    onResponse({ response }) {
+      if (response.status == 204 || response.status == 200) {
+        saved.value = true
+        setTimeout(() => {
+          saved.value = false
+        }, 3000)
+
+      }
+      else {
+        console.error('error');
+      }
+    }
+  })
+
+
+}
+const enabled = computed(() => {
+  if (JSON.stringify(userBuf.value) != JSON.stringify(userData)) return true
+  else return false
+})
 const userFetch = async () => {
   editable.value = false
   if (Number(route.query.id) == userData.id || !route.query.id) {
     editable.value = true;
-    userBuf.value = userData
+    userBuf.value = { ...userData }
   }
   else {
     let token
@@ -123,5 +157,14 @@ form {
 
 button {
   margin: 30px auto;
+}
+
+@media screen and (max-width: 736px) {
+  .userData {
+    gap: 5vw;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+  }
 }
 </style>

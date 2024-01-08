@@ -6,7 +6,7 @@
     <div v-else>
       <p>{{ namePage }}</p>
       <div>
-        <nuxt-link to="/">Main Page</nuxt-link>
+        <nuxt-link to="/">Home</nuxt-link>
         <nuxt-link to="/profile">Profile</nuxt-link>
       </div>
     </div>
@@ -19,7 +19,7 @@ const route = useRoute()
 const namePage = computed(() => {
   switch (route.path) {
     case '/':
-      return 'Main page';
+      return 'Home';
       break;
     case '/profile':
       return 'Profile';

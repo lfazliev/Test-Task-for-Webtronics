@@ -32,10 +32,10 @@ export default defineNuxtConfig({
   ],
 
   site: {
-    name: 'Личный Кабинет',
+    name: 'Tickets Manager',
     description: `Test Task for Webtronics`,
     defaultLocale: 'ru',
-    url: 'localhost:3000'
+    // url: 'localhost:3000'
   },
   robots: {
     disallow: [],

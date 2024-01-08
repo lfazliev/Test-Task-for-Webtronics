@@ -21,11 +21,9 @@ const fetchUser = async () => {
       if (response.status == 200) {
         auth.value = true
         userStore.userData = response._data
-        console.log(userStore.userData);
-
       }
       else {
-        console.log('ошибка авторизации');    //ВЫВЕСТИ
+        console.error('401');
       }
     }
   });

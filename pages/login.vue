@@ -5,20 +5,19 @@
 
       <div class="text-field">
         <input class="text-input" type="text" id="name" name="name" placeholder="Ivan" autocomplete="off"
-          v-model="username">
+          v-model="username" error=''>
         <label for="name">Username</label>
-        <!-- <span class="str" v-show="errorsInput.name">{{ errorsInput.name }}</span> -->
       </div>
 
 
       <div class="text-field">
         <input class="text-input" :type="(!show) ? 'password' : 'text'" id="name" name="name" placeholder="Ivan"
-          autocomplete="off" v-model="password">
+          @input="error = ''" autocomplete="off" v-model="password">
         <label for="name">Password</label>
-        <!-- <span class="str" v-show="errorsInput.name">{{ errorsInput.name }}</span> -->
         <div :class="(!show) ? 'unshow' : ''" v-if="password" @click="show = !show" />
       </div>
       <button type="submit">enter</button>
+      <span class="error" v-show="error">{{ error }}</span>
     </form>
   </section>
 </template>
@@ -29,6 +28,7 @@ const { auth } = storeToRefs(userStore)
 const username = ref('')
 const password = ref('')
 const show = ref(false)
+const error = ref('')
 const login = async () => {
   const data = { 'username': username.value.toLocaleLowerCase(), "password": password.value }
   await $fetch(`/api/login`, {
@@ -41,8 +41,7 @@ const login = async () => {
         }
         auth.value = true;
       } else {
-        console.log('ошибка');    //ВЫВЕСТИ
-
+        error.value = 'Incorrect data'
       }
     },
   })
@@ -71,9 +70,8 @@ watch(() => auth.value, async () => {
   flex-direction: column;
   gap: 0px;
   align-items: center;
-  transform: translate(0, -50%);
   width: 40%;
-  margin: 20% auto;
+  margin: 5vw auto;
 
   button {
 
@@ -81,6 +79,18 @@ watch(() => auth.value, async () => {
 
   }
 
+  .error {
+    color: red;
+    font-size: 0.7rem;
+  }
 
+}
+
+@media screen and (max-width: 736px) {
+  .inputContainer {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+  }
 }
 </style>
