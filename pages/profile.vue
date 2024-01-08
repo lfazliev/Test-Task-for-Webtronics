@@ -93,11 +93,12 @@ const userFetch = async () => {
       token = localStorage.getItem('token')
     }
     if (!token) { auth.value = false; navigateTo('/login'); return }
-    clearNuxtData()
+    userBuf.value = useNuxtData(`user?id=${route.query.id}`).data.value
+    clearNuxtData(`user?id=${route.query.id}`)
     const { data } = await useFetch(`/api/user?id=${route.query.id}`, {
       headers: {
         "Authorization": token,
-      }
+      }, key: `user?id=${route.query.id}`
     })
     if (data.value) {
       userBuf.value = data.value

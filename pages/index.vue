@@ -36,7 +36,7 @@
           <td>{{ formatDate(ticket.createdAt) }}</td>
           <td>
 
-            <nuxt-link :to="`/ticket?id=${ticket.id}`">More</nuxt-link>
+            <nuxt-link :to="`/ticket?id=${ticket.id}`" @click="curentTicket = ticket">More</nuxt-link>
 
           </td>
         </tr>
@@ -45,13 +45,15 @@
   </div>
 </template>
 <script setup lang="ts">
+const mainStore = useMainStore()
+const { curentTicket } = storeToRefs(mainStore)
 const userStore = useUserStore()
 const { auth } = storeToRefs(userStore)
 const tickets = ref([] as Ticket[])
 const sortByColumn = ref('')
 const filterStatus = ref('')
 const filteredTickets = computed(() => {
-  return sortedTickets.value.filter((ticket: Ticket) => {
+  return sortedTickets.value?.filter((ticket: Ticket) => {
     return (!filterStatus.value || ticket.status === filterStatus.value);
   });
 })
@@ -61,8 +63,10 @@ const fetchTickets = async () => {
     token = localStorage.getItem('token')
   }
   if (!token) { auth.value = false; navigateTo('/login'); return }
-  clearNuxtData()
+  tickets.value = useNuxtData('tickets').data.value
+  clearNuxtData('tickets')
   const { data: ticketsData } = await useFetch('/api/tickets', {
+    key: 'tickets',
     headers:
       { "Authorization": token }
 

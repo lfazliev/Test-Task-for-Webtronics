@@ -1,14 +1,14 @@
 <template>
-  <div v-if="ticket" class="ticketContainer">
-    <h1>Ticket Details {{ ticket.id }}</h1>
+  <div v-if="curentTicket" class="ticketContainer">
+    <h1>Ticket Details {{ curentTicket.id }}</h1>
     <div>
-      <p><strong>Ticket author:</strong> <nuxt-link :to="`/profile&id=${ticket.authorId}`"> {{
-        ticket.authorName }} </nuxt-link></p>
-      <p><strong>Title:</strong> {{ ticket.title }}</p>
-      <p><strong>Message:</strong> {{ ticket.message }}</p>
-      <p><strong>Status:</strong> {{ ticket.status }}</p>
-      <p><strong>Details:</strong> {{ ticket.details }}</p>
-      <p><strong>Date of Creation:</strong> {{ new Date(ticket.createdAt).toLocaleString() }}</p>
+      <p><strong>Ticket author:</strong> <nuxt-link :to="`/profile&id=${curentTicket.authorId}`"> {{
+        curentTicket.authorName }} </nuxt-link></p>
+      <p><strong>Title:</strong> {{ curentTicket.title }}</p>
+      <p><strong>Message:</strong> {{ curentTicket.message }}</p>
+      <p><strong>Status:</strong> {{ curentTicket.status }}</p>
+      <p><strong>Details:</strong> {{ curentTicket.details }}</p>
+      <p><strong>Date of Creation:</strong> {{ new Date(curentTicket.createdAt).toLocaleString() }}</p>
     </div>
   </div>
 </template>
@@ -17,7 +17,8 @@
 const userStore = useUserStore()
 const { auth } = storeToRefs(userStore)
 const route = useRoute()
-const ticket = ref()
+const mainStore = useMainStore()
+const { curentTicket } = storeToRefs(mainStore)
 const ticketFetch = async () => {
   if (!route.query.id) {
     showError(createError({
@@ -29,19 +30,21 @@ const ticketFetch = async () => {
     }))
   }
   else {
+    if (curentTicket.value.id == Number(route.query.id)) return
     let token
     if (process.client) {
       token = localStorage.getItem('token')
     }
     if (!token) { auth.value = false; navigateTo('/login'); return }
-    clearNuxtData()
+    curentTicket.value = useNuxtData(`ticket?id=${route.query.id}`).data.value
+    clearNuxtData(`ticket?id=${route.query.id}`)
     const { data } = await useFetch(`/api/ticket?id=${route.query.id}`, {
       headers: {
         "Authorization": token,
-      }
+      }, key: `ticket?id=${route.query.id}`
     })
     if (data.value) {
-      ticket.value = data.value
+      curentTicket.value = data.value
     } else {
       showError(createError({
         statusCode: 404,
