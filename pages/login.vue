@@ -25,6 +25,7 @@
 <script setup lang="ts">
 const userStore = useUserStore()
 const { auth } = storeToRefs(userStore)
+const { userData } = userStore
 const username = ref('')
 const password = ref('')
 const show = ref(false)
@@ -40,6 +41,8 @@ const login = async () => {
           localStorage.setItem('token', response.headers.get('Authorization') as string)
         }
         auth.value = true;
+        Object.assign(userData, response._data)
+
       } else {
         error.value = 'Incorrect data'
       }
